@@ -7,16 +7,26 @@ const main = async () => {
     await waveContract.deployed();
     let contractBalance = await hre.ethers.provider.getBalance(waveContract.address)
     console.log("Contract balance: " + hre.ethers.utils.formatEther(contractBalance))
-    
+
     let waveCount;
     waveCount = await waveContract.getTotalWaves();
     console.log("The number of waves so far is " + waveCount)
     let waveTxn = await waveContract.wave("Waving is fun");
     await waveTxn.wait();
+    console.log("First Wave")
     waveTxn = await waveContract.connect(randomPerson).wave("Waving is fun")
     await waveTxn.wait()
-    waveTxn = await waveContract.connect(randomPerson).wave("Waving is fun")
-    await waveTxn.wait()
+    console.log("Second Wave")
+    const okay = await waveContract.isWaverOkayToWave(randomPerson.address)
+    console.log(okay)
+    if(okay){
+      waveTxn = await waveContract.connect(randomPerson).wave("Waving is fun")
+      await waveTxn.wait()
+    }else{
+      console.log("Hold on waver! Give us a little time")
+    }
+    //waveTxn = await waveContract.connect(randomPerson).wave("Waving is fun")
+    //await waveTxn.wait()
     waveCount = await waveContract.getTotalWaves();
     console.log("The number of waves so far is " + waveCount)
     //contractBalance = await hre.ethers.provider.getBalance(waveContract.address)
@@ -43,10 +53,10 @@ const main = async () => {
     //console.log("Contract balance: " + contractBalance)
     console.log("Contract balance: " + hre.ethers.utils.formatEther(contractBalance))
     //await waveTxn.wait();*/
-    
+
     /*waveTxn = await waveContract.connect(randomPerson2).wave("Waving is fun");
     await waveTxn.wait();
-    
+
     waveCount = await waveContract.getTotalWaves();
 
     waves = await waveContract.getAllWaves();
@@ -61,7 +71,7 @@ const main = async () => {
     */
 
   };
-  
+
   const runMain = async () => {
     try {
       await main();
@@ -71,5 +81,5 @@ const main = async () => {
       process.exit(1);
     }
   };
-  
+
   runMain();
