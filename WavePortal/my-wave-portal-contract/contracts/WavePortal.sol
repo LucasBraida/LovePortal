@@ -54,7 +54,7 @@ contract WavePortal {
     function sendLove(address msgOwner) public payable {
         require(msg.value == 0.0001 ether, "Something is fishy. You are sending us the wrong amount of ether");
         seed = (block.timestamp + block.difficulty + seed) % 100;
-        if(seed <= 80){
+        if(seed <= 5){
 
             uint256 prizeAmount = 0.001 ether;
 
