@@ -1,7 +1,10 @@
 *{
   box-sizing: border-box;
 }
-
+body{
+  background-image: url(images\11_pattern.jpg);
+  background-repeat: repeat;
+}
 .mainContainer {
   display: flex;
   justify-content: center;
