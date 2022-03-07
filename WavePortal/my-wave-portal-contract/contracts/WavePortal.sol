@@ -48,7 +48,23 @@ contract WavePortal {
             require(prizeAmount <= address(this).balance, "Sorry! Trying to send more funds than I have available");
 
             (bool success, ) = (msg.sender).call{value: prizeAmount}("");
-            require(success, "FAiled to withdraw money from the contract");}
+            require(success, "Failed to withdraw money from the contract");}
+    }
+
+    function sendLove(address msgOwner) public payable {
+        require(msg.value == 0.0001 ether, "Something is fishy. You are sending us the wrong amount of ether");
+        seed = (block.timestamp + block.difficulty + seed) % 100;
+        if(seed <= 5){
+
+            uint256 prizeAmount = 0.001 ether;
+
+            require(2*prizeAmount <= address(this).balance, "Sorry! Trying to send more funds than I have available");
+
+            (bool successSender, ) = (msg.sender).call{value: prizeAmount}("");
+            (bool successOwner,) = (msgOwner).call{value: prizeAmount}("");
+            bool successFull = successSender && successOwner;
+            require(successFull, "Failed to withdraw money from the contract");}
+
     }
 
     function getTotalWaves() public view returns (uint256) {

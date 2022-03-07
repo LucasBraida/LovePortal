@@ -1,22 +1,39 @@
 import React from "react"
 import "./Header.css"
-import DoubbleBubble from "../DoubleBubble/DoubleBubble.jsx"
-
+import DoubbleBubble from "../DoubleBubble/DoubleBubble.jsx";
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import Stack from '@mui/material/Stack';
+import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 function HeaderInput(props){
+    const [message, setMessage] = React.useState("")
+    
+    const changeMessage = (e) =>{
+      setMessage(e.target.value)
+    }
+
+  const sendWave = async ()=>{
+    await props.wave(message)
+    setMessage("")
+  }
     return(
       <div className="headerInput">
         {props.minningOver
           ? <div className="headerInput">
-            <button className="waveButton" onClick={props.wave}>
+            <button className="waveButton" onClick={sendWave}>
             Wave at Me
+            
             </button>
             <form onSubmit={(e) => {e.preventDefault()}}>
                <textarea
                   className="message"
                   type="text" 
                   placeholder="Sent us something funny"
-                  value={props.message}
-                  onChange={props.changeMessage}
+                  value={message}
+                  onChange={changeMessage}
                />
               </form>
             </div> 
@@ -27,7 +44,7 @@ function HeaderInput(props){
   }
 
 export default function Header(props){
-
+const [clicked, setClicked] = React.useState(false)
   return(
       <div className="headContainer">
         <div className="header">
@@ -48,7 +65,14 @@ export default function Header(props){
           :<button className="waveButton" onClick={props.connectWallet}>
             Connect your Wallet
         </button>
+        
         }
+        <IconButton color="secondary" aria-label="upload picture" component="span" onClick={()=>{setClicked(!clicked)}} >
+          {!clicked ? 
+          <FavoriteBorderRoundedIcon style={{ color: 'pink' }}/> 
+          : <FavoriteRoundedIcon style={{ color: 'pink' }}/>}
+          
+        </IconButton>
       </div>
   )
 }

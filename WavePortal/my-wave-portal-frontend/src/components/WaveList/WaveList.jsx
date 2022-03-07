@@ -11,6 +11,7 @@ export default function WaveList(props){
       return 1
     }
   }
+
   const waveElements= props.waves.sort(sortWaves).map((wave, index) => {
           return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}/>
           )
