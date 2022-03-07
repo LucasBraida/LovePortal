@@ -10,7 +10,7 @@ import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 function HeaderInput(props){
     const [message, setMessage] = React.useState("")
-    
+
     const changeMessage = (e) =>{
       setMessage(e.target.value)
     }
@@ -25,26 +25,26 @@ function HeaderInput(props){
           ? <div className="headerInput">
             <button className="waveButton" onClick={sendWave}>
             Wave at Me
-            
+
             </button>
             <form onSubmit={(e) => {e.preventDefault()}}>
                <textarea
                   className="message"
-                  type="text" 
+                  type="text"
                   placeholder="Sent us something funny"
                   value={message}
                   onChange={changeMessage}
                />
               </form>
-            </div> 
-          
+            </div>
+
           : <DoubbleBubble speed={5} customText="Waiting those beautifull miners" /> }
       </div>
     )
   }
 
 export default function Header(props){
-const [clicked, setClicked] = React.useState(false)
+
   return(
       <div className="headContainer">
         <div className="header">
@@ -65,14 +65,9 @@ const [clicked, setClicked] = React.useState(false)
           :<button className="waveButton" onClick={props.connectWallet}>
             Connect your Wallet
         </button>
-        
+
         }
-        <IconButton color="secondary" aria-label="upload picture" component="span" onClick={()=>{setClicked(!clicked)}} >
-          {!clicked ? 
-          <FavoriteBorderRoundedIcon style={{ color: 'pink' }}/> 
-          : <FavoriteRoundedIcon style={{ color: 'pink' }}/>}
-          
-        </IconButton>
+
       </div>
   )
 }
