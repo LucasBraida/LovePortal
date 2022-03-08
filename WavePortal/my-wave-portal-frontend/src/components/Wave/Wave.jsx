@@ -1,11 +1,11 @@
 import React from "react"
-import IconButton from '@mui/material/IconButton';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import LoveButton from '../LoveButton/LoveButton'
 import "./Wave.css"
+
 
 export default function Wave(props) {
   const [clicked, setClicked] = React.useState(false)
+
   return (
     <div className="wave" >
       <div className="wave--address wave--info--position wave--left--border">
@@ -18,14 +18,8 @@ export default function Wave(props) {
         <span className="title">Time:</span>
         <span className="content">{props.timestamp.toString()}</span>
       </div>
-      <div>
-      <IconButton className="wave--gap"color="secondary" aria-label="upload picture" size="large" component="span" onClick={()=>{setClicked(prev => !prev)}} >
-          {!clicked?
-          <FavoriteBorderRoundedIcon fontSize="inherit" style={{ color: 'pink' }}/>
-          : <FavoriteRoundedIcon fontSize="inherit" style={{ color: 'pink' }}/>}
+      <div className="wave--button"><LoveButton ></LoveButton></div>
 
-        </IconButton>
-      </div>
     </div>
   )
 }

@@ -53,6 +53,10 @@
   font-weight: 600;
 
 }
+
+.wave--button{
+  margin-right: 5px;
+}
 /*.wave--message:before {
   content : "";
   position: absolute;
