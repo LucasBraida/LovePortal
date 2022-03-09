@@ -13,8 +13,8 @@ export default function App() {
   const [waves, setWaves] = React.useState([])
   const [contract, setContract] = React.useState()
   const contractAddress = "0x5254b542a98716e54aB07247362E04Aa12acCC8c"
-  const contractABI = abi.abi 
-  
+  const contractABI = abi.abi
+
   const getContract = () => {
     const { ethereum } = window
     const onNewWave = (from, timestamp, message) => {
@@ -37,11 +37,13 @@ export default function App() {
       console.log("No wallet found")
     }
   }
-  
+
   const getWaves = async () => {
     try {
-  
+      console.log(contract)
+
       const wavesBlockchain = await contract.getAllWaves()
+
       setWaves(wavesBlockchain.map(wave => {
         return {
           address: wave.waver,
@@ -79,7 +81,7 @@ export default function App() {
         } else{
           alert("Wait a momment waver! We need a little time to breathe")
         }
-        
+
       } else {
         console.log("No wallet found")
       }
@@ -122,7 +124,7 @@ export default function App() {
 
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
       getWaves();
-      console.log(accounts)
+      console.log(waves)
       setCurrentAccount(accounts[0])
     } catch (error) {
       console.log(error)
@@ -141,14 +143,14 @@ export default function App() {
   };
   }, [])
 
-  
+
   return (
     <div className="mainContainer">
       <Header className="headContainer"
-        totalWaves={waves.length} 
-        currentAccount={currentAccount} 
-        minningOver={minningOver} 
-        wave={wave} 
+        totalWaves={waves.length}
+        currentAccount={currentAccount}
+        minningOver={minningOver}
+        wave={wave}
         connectWallet={connectWallet}/>
       <WaveList waves={waves}/>
     </div>

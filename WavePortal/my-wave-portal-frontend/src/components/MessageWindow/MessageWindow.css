@@ -1,0 +1,32 @@
+
+.messageWindow{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 50px;
+    align-items: center;
+    width: 50%;
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    border-radius: 7px;
+}
+
+.messageWindow--title{
+    margin-top: 0px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.messageWindow--text{
+    margin-top: 0px;
+    align-content: start;
+    line-height: 1.7rem;
+}
+
+.messageWindow--buttons{
+    align-self: flex-end;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+}

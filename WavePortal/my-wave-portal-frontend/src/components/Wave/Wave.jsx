@@ -18,7 +18,7 @@ export default function Wave(props) {
         <span className="title">Time:</span>
         <span className="content">{props.timestamp.toString()}</span>
       </div>
-      <div className="wave--button"><LoveButton ></LoveButton></div>
+      <div className="wave--button"><LoveButton onClick={props.handleOpen}></LoveButton></div>
 
     </div>
   )

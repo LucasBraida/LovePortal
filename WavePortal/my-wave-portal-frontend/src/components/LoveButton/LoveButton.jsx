@@ -14,7 +14,10 @@ export default function Wave(props) {
     })(Tooltip);
     return (
             <StyledTooltip title="Send Love" placement="top" arrow disableHoverListener={clicked}>
-                <IconButton color="secondary" size="large" onClick={() => { setClicked(prev => !prev)}} >
+                <IconButton color="secondary" size="large" onClick={() => {
+                    setClicked(prev => !prev)
+                    props.onClick()
+                    }} >
                     {!clicked ?
                         <FavoriteBorderRoundedIcon fontSize="inherit" style={{ color: 'pink' }} />
                         : <FavoriteRoundedIcon fontSize="inherit" style={{ color: 'pink' }} />}
