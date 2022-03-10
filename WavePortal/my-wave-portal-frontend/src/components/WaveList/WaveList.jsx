@@ -5,9 +5,12 @@ import Wave from "../Wave/Wave.jsx"
 import "./WaveList.css"
 
 export default function WaveList(props) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [open, setOpen] = React.useState(false)
+  //Variable to mantain the user's choice, in the checkbox, to not see the Modal
+  const [showModal, setShowModal] = React.useState(true)
+  const [heartClicked, setHeartClicked] = React.useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
   function sortWaves(waveOne, waveTwo) {
     if (waveOne.timestamp > waveTwo.timestamp) {
       return -1
@@ -17,7 +20,10 @@ export default function WaveList(props) {
   }
 
   const waveElements = props.waves.sort(sortWaves).map((wave, index) => {
-    return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message} handleOpen={handleOpen} />
+    return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}
+            handleModal={showModal ? handleOpen : handleClose}
+            showModal={showModal}
+            heartClicked={heartClicked}/>
     )
   })
   return (
@@ -27,7 +33,7 @@ export default function WaveList(props) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <MessageWindow />
+        <MessageWindow closeModal={handleClose} doNotShowModal={() =>{setShowModal(false)}} confirmSendLove={() => {setHeartClicked(true)}}/>
       </Modal>
       {waveElements}
     </div>

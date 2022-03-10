@@ -8,44 +8,72 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
-function HeaderInput(props){
-    const [message, setMessage] = React.useState("")
 
-    const changeMessage = (e) =>{
-      setMessage(e.target.value)
-    }
+function HeaderInput(props) {
+  const [message, setMessage] = React.useState("")
 
-  const sendWave = async ()=>{
+  const changeMessage = (e) => {
+    setMessage(e.target.value)
+  }
+
+  const sendWave = async () => {
     await props.wave(message)
     setMessage("")
   }
-    return(
-      <div className="headerInput">
-        {props.minningOver
-          ? <div className="headerInput">
-            <button className="waveButton" onClick={sendWave}>
+  return (
+    <div className="headerInput">
+      {props.minningOver
+        ? <div className="headerInput">
+          <button className="waveButton" onClick={sendWave}>
             Wave at Me
 
-            </button>
-            <form onSubmit={(e) => {e.preventDefault()}}>
-               <textarea
-                  className="message"
-                  type="text"
-                  placeholder="Sent us something funny"
-                  value={message}
-                  onChange={changeMessage}
-               />
-              </form>
-            </div>
+          </button>
+          <form onSubmit={(e) => { e.preventDefault() }}>
+            <textarea
+              className="message"
+              type="text"
+              placeholder="Sent us something funny"
+              value={message}
+              onChange={changeMessage}
+            />
+          </form>
+        </div>
 
-          : <DoubbleBubble speed={5} customText="Waiting those beautifull miners" /> }
+        : <DoubbleBubble speed={5} customText="Waiting those beautifull miners" />}
+    </div>
+  )
+}
+
+export default function Header(props) {
+
+  return (
+    <div className="headContainer">
+      <div className="header">
+        👋 Hey there!
       </div>
-    )
-  }
+      {/*Check if we'are communicating with the blockchain and were able to get the waves*/}
+      {props.totalWaves
+        ? <>
+          <div className="bio">
+            {`We've had ${props.totalWaves} waves so far. Gives us a wave too`}
+          </div>
+          <HeaderInput minningOver={props.minningOver} wave={props.wave} message={props.message} changeMessage={props.changeMessage} />
+        </>
+        : <>
+          <div className="bio">
+            {`Connect your wallet and wave at me`}
+          </div>
+          <button className="waveButton" onClick={props.connectWallet}>
+            Connect your Wallet
+          </button>
+        </>}
 
-export default function Header(props){
+    </div>
+  )
+}
 
-  return(
+/*
+return(
       <div className="headContainer">
         <div className="header">
           👋 Hey there!
@@ -70,4 +98,4 @@ export default function Header(props){
 
       </div>
   )
-}
+*/
