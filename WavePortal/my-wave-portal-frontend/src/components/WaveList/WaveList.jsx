@@ -1,6 +1,6 @@
-import { Modal } from "@mui/material"
+//import { Modal } from "@mui/material"
 import React from "react"
-import MessageWindow from "../MessageWindow/MessageWindow.jsx";
+//import MessageWindow from "../MessageWindow/MessageWindow.jsx";
 import Wave from "../Wave/Wave.jsx"
 import "./WaveList.css"
 
@@ -21,21 +21,27 @@ export default function WaveList(props) {
 
   const waveElements = props.waves.sort(sortWaves).map((wave, index) => {
     return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}
-            handleModal={showModal ? handleOpen : handleClose}
-            showModal={showModal}
-            heartClicked={heartClicked}/>
+            doNotShowModal={() =>{setShowModal(false)}}
+            showModal={showModal}/>
     )
   })
   return (
     <div className="dataContainer">
-      <Modal
+      {/*<Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
         <MessageWindow closeModal={handleClose} doNotShowModal={() =>{setShowModal(false)}} confirmSendLove={() => {setHeartClicked(true)}}/>
-      </Modal>
+        </Modal>*/}
       {waveElements}
     </div>
   )
 }
+
+/*
+<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}
+            handleModal={showModal ? handleOpen : handleClose}
+            showModal={showModal}
+            heartClicked={heartClicked}/>
+*/
