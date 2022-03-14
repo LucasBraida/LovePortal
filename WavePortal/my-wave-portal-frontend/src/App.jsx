@@ -15,16 +15,29 @@ export default function App() {
   const contractAddress = "0x5254b542a98716e54aB07247362E04Aa12acCC8c"
   const contractABI = abi.abi
 
+  const createWave = (address, timestamp, message, lovedInSession) => {
+    return {
+      address,
+      timestamp,
+      message,
+      lovedInSession
+    }
+  }
+
+  const setWaveAsLovedInSession = (wave) =>{
+    const newWaves = waves.map(el => JSON.stringify(el) === JSON.stringify(wave) ?
+      {...el, lovedInSession: true}
+      : el)
+      setWaves(newWaves)
+  }
+
   const getContract = () => {
     const { ethereum } = window
     const onNewWave = (from, timestamp, message) => {
+    console.log("event happened")
     setWaves(prevState => [
       ...prevState,
-      {
-        address: from,
-        timestamp: new Date(timestamp * 1000),
-        message: message,
-      },
+      createWave(from, new Date(timestamp * 1000), message, false),
     ]);
   };
     if (ethereum) {
@@ -32,6 +45,7 @@ export default function App() {
       const signer = provider.getSigner()
       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer)
       setContract(wavePortalContract)
+      //Set event listener to add a new waqve to the waves variable every time the contract emits a new "NewWave"
       wavePortalContract.on("NewWave", onNewWave);
     } else {
       console.log("No wallet found")
@@ -45,11 +59,7 @@ export default function App() {
       const wavesBlockchain = await contract.getAllWaves()
 
       setWaves(wavesBlockchain.map(wave => {
-        return {
-          address: wave.waver,
-          timestamp: new Date(wave.timestamp * 1000),
-          message: wave.message
-        }
+        return createWave(wave.waver, new Date(wave.timestamp * 1000) , wave.message, false)
       }))
     } catch (error) {
       console.log(error)
@@ -134,6 +144,7 @@ export default function App() {
   function changeMessage(e) {
     setMessage(e.target.value)
   }
+
   React.useEffect(() => {
     getContract()
     return () => {
@@ -152,7 +163,7 @@ export default function App() {
         minningOver={minningOver}
         wave={wave}
         connectWallet={connectWallet}/>
-      <WaveList waves={waves}/>
+      <WaveList waves={waves} setWaveAsLovedInSession={setWaveAsLovedInSession}/>
     </div>
   );
 }

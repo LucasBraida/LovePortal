@@ -18,6 +18,7 @@ const MessageWindow = React.forwardRef((props, ref) => {
     }
     props.closeModal()
     props.confirmSendLove()
+    props.setWaveAsLovedInSession()
   }
   return (
     <div className="messageWindow">

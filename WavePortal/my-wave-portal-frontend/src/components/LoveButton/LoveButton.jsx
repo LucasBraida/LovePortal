@@ -13,7 +13,7 @@ export default function Wave(props) {
         },
     })(Tooltip);
     return (
-            <StyledTooltip title="Send Love" placement="top" arrow disableHoverListener={props.heartClicked}>
+            <StyledTooltip title="Send Love" placement="top" arrow disableHoverListener={props.lovedInSession}>
                 <IconButton color="secondary" size="large" onClick={() => {
                     if(props.showModal){
                         props.onClick()
@@ -23,7 +23,7 @@ export default function Wave(props) {
                     setClicked(prev => !prev)
 
                     }} >
-                    {!props.heartClicked ?
+                    {!props.lovedInSession ?
                         <FavoriteBorderRoundedIcon fontSize="inherit" style={{ color: 'pink' }} />
                         : <FavoriteRoundedIcon fontSize="inherit" style={{ color: 'pink' }} />}
 

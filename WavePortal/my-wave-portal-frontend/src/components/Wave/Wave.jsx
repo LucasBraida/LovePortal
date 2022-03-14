@@ -11,6 +11,12 @@ export default function Wave(props) {
   const [heartClicked, setHeartClicked] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const waveObject = {
+    address: props.address,
+    timestamp: props.timestamp,
+    message: props.message,
+    lovedInSession: props.lovedInSession
+  }
   return (
     <div className="wave" >
       <Modal
@@ -18,7 +24,10 @@ export default function Wave(props) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <MessageWindow closeModal={handleClose} doNotShowModal={props.doNotShowModal} confirmSendLove={() => {setHeartClicked(true)}}/>
+        <MessageWindow closeModal={handleClose} doNotShowModal={props.doNotShowModal} confirmSendLove={() => {setHeartClicked(true)}}
+        setWaveAsLovedInSession={() => {
+          console.log(waveObject)
+          props.setWaveAsLovedInSession(waveObject)}} />
       </Modal>
       <div className="wave--address wave--info--position wave--left--border">
         <span className="title">Address:</span>
@@ -30,7 +39,10 @@ export default function Wave(props) {
         <span className="title">Time:</span>
         <span className="content">{props.timestamp.toString()}</span>
       </div>
-      <div className="wave--button"><LoveButton onClick={handleOpen} showModal={props.showModal} heartClicked={heartClicked} confirmSendLove={() => {setHeartClicked(true)}}></LoveButton></div>
+      <div className="wave--button"><LoveButton onClick={handleOpen} showModal={props.showModal} heartClicked={heartClicked} confirmSendLove={() => {setHeartClicked(true)}}
+      lovedInSession={props.lovedInSession}
+      setWaveAsLovedInSession={props.setWaveAsLovedInSession}
+      ></LoveButton></div>
 
     </div>
   )

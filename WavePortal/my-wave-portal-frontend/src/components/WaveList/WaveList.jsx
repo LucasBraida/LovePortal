@@ -22,9 +22,12 @@ export default function WaveList(props) {
   const waveElements = props.waves.sort(sortWaves).map((wave, index) => {
     return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}
             doNotShowModal={() =>{setShowModal(false)}}
-            showModal={showModal}/>
+            showModal={showModal}
+            lovedInSession={wave.lovedInSession}
+            setWaveAsLovedInSession={props.setWaveAsLovedInSession}/>
     )
   })
+  console.log(props.waves)
   return (
     <div className="dataContainer">
       {/*<Modal
