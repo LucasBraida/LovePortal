@@ -5,6 +5,9 @@ import abi from "./utils/WavePortal.json";
 import DoubbleBubble from "./components/DoubleBubble/DoubleBubble.jsx";
 import WaveList from "./components/WaveList/WaveList.jsx";
 import Header from "./components/Header/Header.jsx";
+import DataContext from './data/DataContext'
+import WaveObject from './utils/WaveObject'
+import Footer from "./components/Footer/Footer";
 
 export default function App() {
 
@@ -24,22 +27,23 @@ export default function App() {
     }
   }
 
-  const setWaveAsLovedInSession = (wave) =>{
+  const setWaveAsLovedInSession = (wave) => {
     const newWaves = waves.map(el => JSON.stringify(el) === JSON.stringify(wave) ?
-      {...el, lovedInSession: true}
+      { ...el, lovedInSession: true }
       : el)
-      setWaves(newWaves)
+    setWaves(newWaves)
   }
 
   const getContract = () => {
     const { ethereum } = window
     const onNewWave = (from, timestamp, message) => {
-    console.log("event happened")
-    setWaves(prevState => [
-      ...prevState,
-      createWave(from, new Date(timestamp * 1000), message, false),
-    ]);
-  };
+      console.log("event happened")
+      setWaves(prevState => [
+        ...prevState,
+        new WaveObject(from, new Date(timestamp * 1000), message, false),
+        //createWave(from, new Date(timestamp * 1000), message, false),
+      ])
+    }
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
@@ -59,7 +63,8 @@ export default function App() {
       const wavesBlockchain = await contract.getAllWaves()
 
       setWaves(wavesBlockchain.map(wave => {
-        return createWave(wave.waver, new Date(wave.timestamp * 1000) , wave.message, false)
+        return new WaveObject(wave.waver, new Date(wave.timestamp * 1000), wave.message, false)
+        //return createWave(wave.waver, new Date(wave.timestamp * 1000) , wave.message, false)
       }))
     } catch (error) {
       console.log(error)
@@ -79,16 +84,16 @@ export default function App() {
       if (ethereum) {
         console.log(currentAccount)
         const okayToWave = await getOkayToWave(currentAccount)
-        if(okayToWave){
-          if(messageParam.length > 0){
-          const waveWait = await contract.wave(messageParam, { gasLimit: 300000 })
-          setMinningOver(false)
-          await waveWait.wait()
-          setMinningOver(true)
-      }else{
-        alert("A wave with a message is sooo much more special")
-      }
-        } else{
+        if (okayToWave) {
+          if (messageParam.length > 0) {
+            const waveWait = await contract.wave(messageParam, { gasLimit: 300000 })
+            setMinningOver(false)
+            await waveWait.wait()
+            setMinningOver(true)
+          } else {
+            alert("A wave with a message is sooo much more special")
+          }
+        } else {
           alert("Wait a momment waver! We need a little time to breathe")
         }
 
@@ -148,22 +153,28 @@ export default function App() {
   React.useEffect(() => {
     getContract()
     return () => {
-    if (contract) {
-      contract.off("NewWave", onNewWave);
-    }
-  };
+      if (contract) {
+        contract.off("NewWave", onNewWave);
+      }
+    };
   }, [])
 
+  const w1 = new WaveObject("123", 123, true, false)
 
+  console.log(w1)
   return (
-    <div className="mainContainer">
-      <Header className="headContainer"
-        totalWaves={waves.length}
-        currentAccount={currentAccount}
-        minningOver={minningOver}
-        wave={wave}
-        connectWallet={connectWallet}/>
-      <WaveList waves={waves} setWaveAsLovedInSession={setWaveAsLovedInSession}/>
-    </div>
+    <DataContext.Provider value={{ waves, setWaves, contract }}>
+      <div className="mainContainer">
+        <Header className="headContainer"
+          totalWaves={waves.length}
+          currentAccount={currentAccount}
+          minningOver={minningOver}
+          wave={wave}
+          connectWallet={connectWallet} />
+        <WaveList waves={waves} />
+        <Footer className="footerContainer"></Footer>
+      </div>
+    </DataContext.Provider>
+
   );
 }

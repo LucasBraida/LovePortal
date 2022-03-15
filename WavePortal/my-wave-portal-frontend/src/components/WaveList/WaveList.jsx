@@ -24,7 +24,7 @@ export default function WaveList(props) {
             doNotShowModal={() =>{setShowModal(false)}}
             showModal={showModal}
             lovedInSession={wave.lovedInSession}
-            setWaveAsLovedInSession={props.setWaveAsLovedInSession}/>
+            />
     )
   })
   console.log(props.waves)

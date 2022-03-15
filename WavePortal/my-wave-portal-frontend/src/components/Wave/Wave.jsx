@@ -3,19 +3,32 @@ import LoveButton from '../LoveButton/LoveButton'
 import "./Wave.css"
 import { Modal } from "@mui/material"
 import MessageWindow from "../MessageWindow/MessageWindow.jsx";
+import DataContext from "../../data/DataContext";
+
 export default function Wave(props) {
-  const [clicked, setClicked] = React.useState(false)
   const [open, setOpen] = React.useState(false)
-  //Variable to mantain the user's choice, in the checkbox, to not see the Modal
-  const [showModal, setShowModal] = React.useState(true)
-  const [heartClicked, setHeartClicked] = React.useState(false)
+
+  const context = React.useContext(DataContext)
+
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+
   const waveObject = {
     address: props.address,
     timestamp: props.timestamp,
     message: props.message,
     lovedInSession: props.lovedInSession
+  }
+
+  const setLoved = (waveObj) =>{
+    const newWaves = context.waves.map(el => JSON.stringify(el) === JSON.stringify(waveObj) ?
+    {...el, lovedInSession: true}
+    : el)
+    context.setWaves(newWaves)
+  }
+
+  const confirmSendLove = () => {
+    setLoved(waveObject)
   }
   return (
     <div className="wave" >
@@ -24,10 +37,8 @@ export default function Wave(props) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <MessageWindow closeModal={handleClose} doNotShowModal={props.doNotShowModal} confirmSendLove={() => {setHeartClicked(true)}}
-        setWaveAsLovedInSession={() => {
-          console.log(waveObject)
-          props.setWaveAsLovedInSession(waveObject)}} />
+        <MessageWindow closeModal={handleClose} doNotShowModal={props.doNotShowModal} confirmSendLove={confirmSendLove}
+          setLoved = {() => {setLoved(waveObject)}}/>
       </Modal>
       <div className="wave--address wave--info--position wave--left--border">
         <span className="title">Address:</span>
@@ -39,9 +50,8 @@ export default function Wave(props) {
         <span className="title">Time:</span>
         <span className="content">{props.timestamp.toString()}</span>
       </div>
-      <div className="wave--button"><LoveButton onClick={handleOpen} showModal={props.showModal} heartClicked={heartClicked} confirmSendLove={() => {setHeartClicked(true)}}
-      lovedInSession={props.lovedInSession}
-      setWaveAsLovedInSession={props.setWaveAsLovedInSession}
+      <div className="wave--button"><LoveButton onClick={props.lovedInSession ? () => {} : handleOpen} showModal={props.showModal} confirmSendLove={confirmSendLove}
+        lovedInSession={props.lovedInSession}
       ></LoveButton></div>
 
     </div>

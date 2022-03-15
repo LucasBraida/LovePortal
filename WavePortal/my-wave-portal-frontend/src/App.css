@@ -7,13 +7,15 @@ body{
 }
 .mainContainer {
   display: flex;
-  justify-content: center;
+  align-items: flex-start;
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   padding: 0px;
 }
+
+
 /*.headContainer {
   display: flex;
   flex-direction: column;

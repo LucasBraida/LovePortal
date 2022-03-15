@@ -6,7 +6,6 @@ import { Tooltip } from "@mui/material";
 import { withStyles } from '@mui/styles';
 
 export default function Wave(props) {
-    const [clicked, setClicked] = React.useState(false)
     const StyledTooltip = withStyles({
         tooltipPlacementTop: {
             top: "8px",
@@ -20,7 +19,6 @@ export default function Wave(props) {
                     }else {
                         props.confirmSendLove()
                     }
-                    setClicked(prev => !prev)
 
                     }} >
                     {!props.lovedInSession ?
