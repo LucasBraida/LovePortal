@@ -14,8 +14,11 @@ export default function App() {
   const [currentAccount, setCurrentAccount] = React.useState()
   const [minningOver, setMinningOver] = React.useState(true)
   const [waves, setWaves] = React.useState([])
+  //variable to change the UI after it's sure that connected and received the available waves
+  const [connected, setConnected] = React.useState(false)
   const [contract, setContract] = React.useState()
-  const contractAddress = "0x5254b542a98716e54aB07247362E04Aa12acCC8c"
+  //const contractAddress = "0x5254b542a98716e54aB07247362E04Aa12acCC8c"
+  const contractAddress = "0x6C7077c85692384047fFFAdC7FD6841b6c6d0025"
   const contractABI = abi.abi
 
   const createWave = (address, timestamp, message, lovedInSession) => {
@@ -44,12 +47,17 @@ export default function App() {
         //createWave(from, new Date(timestamp * 1000), message, false),
       ])
     }
+    const onNewWinner = (address, message) => {
+      if(address === currentAccount){
+        alert(message)
+      }
+    }
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
       const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer)
       setContract(wavePortalContract)
-      //Set event listener to add a new waqve to the waves variable every time the contract emits a new "NewWave"
+      //Set event listener to add a new wave to the waves variable every time the contract emits a new "NewWave" event
       wavePortalContract.on("NewWave", onNewWave);
     } else {
       console.log("No wallet found")
@@ -61,7 +69,8 @@ export default function App() {
       console.log(contract)
 
       const wavesBlockchain = await contract.getAllWaves()
-
+      //set connected to true after it received the waves
+      setConnected(true)
       setWaves(wavesBlockchain.map(wave => {
         return new WaveObject(wave.waver, new Date(wave.timestamp * 1000), wave.message, false)
         //return createWave(wave.waver, new Date(wave.timestamp * 1000) , wave.message, false)
@@ -159,14 +168,14 @@ export default function App() {
     };
   }, [])
 
-  const w1 = new WaveObject("123", 123, true, false)
 
-  console.log(w1)
+
   return (
     <DataContext.Provider value={{ waves, setWaves, contract }}>
       <div className="mainContainer">
         <Header className="headContainer"
           totalWaves={waves.length}
+          connected={connected}
           currentAccount={currentAccount}
           minningOver={minningOver}
           wave={wave}

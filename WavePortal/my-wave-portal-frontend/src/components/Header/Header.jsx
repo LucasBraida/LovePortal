@@ -52,7 +52,7 @@ export default function Header(props) {
         👋 Hey there!
       </div>
       {/*Check if we'are communicating with the blockchain and were able to get the waves*/}
-      {props.totalWaves
+      {props.connected
         ? <>
           <div className="bio">
             {`We've had ${props.totalWaves} waves so far. Gives us a wave too`}

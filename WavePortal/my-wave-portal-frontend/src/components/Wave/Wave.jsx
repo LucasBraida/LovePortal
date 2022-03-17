@@ -4,7 +4,7 @@ import "./Wave.css"
 import { Modal } from "@mui/material"
 import MessageWindow from "../MessageWindow/MessageWindow.jsx";
 import DataContext from "../../data/DataContext";
-
+import { ethers } from "ethers";
 export default function Wave(props) {
   const [open, setOpen] = React.useState(false)
 
@@ -27,8 +27,29 @@ export default function Wave(props) {
     context.setWaves(newWaves)
   }
 
-  const confirmSendLove = () => {
-    setLoved(waveObject)
+  const confirmSendLove = async (waveObj) => {
+    try{
+      const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.001') })
+      //alert("Waiting to confirm your transaction")
+      await sendLove.wait()
+      setLoved(waveObject)
+    }catch(error){
+      alert("Something went wrong with your transaction")
+      //console.log(error)
+    }
+    //console.log("Chegamos até aqui")
+  }
+
+  const tryTest = (num) =>{
+    try{
+      const res = 10/num
+      console.log("Depois do possivel erro")
+      console.log(res)
+    }catch(error){
+
+      console.log("Pego no erro")
+    }
+    console.log("Final da funcao")
   }
   return (
     <div className="wave" >
@@ -52,6 +73,7 @@ export default function Wave(props) {
       </div>
       <div className="wave--button"><LoveButton onClick={props.lovedInSession ? () => {} : handleOpen} showModal={props.showModal} confirmSendLove={confirmSendLove}
         lovedInSession={props.lovedInSession}
+        loading={false}
       ></LoveButton></div>
 
     </div>
