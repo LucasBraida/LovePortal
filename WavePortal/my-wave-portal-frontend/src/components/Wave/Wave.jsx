@@ -7,7 +7,7 @@ import DataContext from "../../data/DataContext";
 import { ethers } from "ethers";
 export default function Wave(props) {
   const [open, setOpen] = React.useState(false)
-
+  const [waitingSendLove, setWaitingSendLove] = React.useState(false)
   const context = React.useContext(DataContext)
 
   const handleOpen = () => setOpen(true)
@@ -29,12 +29,15 @@ export default function Wave(props) {
 
   const confirmSendLove = async (waveObj) => {
     try{
-      const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.001') })
+      const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.0001') })
       //alert("Waiting to confirm your transaction")
+      setWaitingSendLove(true)
       await sendLove.wait()
+      setWaitingSendLove(false)
       setLoved(waveObject)
     }catch(error){
       alert("Something went wrong with your transaction")
+      setWaitingSendLove(false)
       //console.log(error)
     }
     //console.log("Chegamos até aqui")
@@ -73,7 +76,7 @@ export default function Wave(props) {
       </div>
       <div className="wave--button"><LoveButton onClick={props.lovedInSession ? () => {} : handleOpen} showModal={props.showModal} confirmSendLove={confirmSendLove}
         lovedInSession={props.lovedInSession}
-        loading={false}
+        loading={waitingSendLove}
       ></LoveButton></div>
 
     </div>

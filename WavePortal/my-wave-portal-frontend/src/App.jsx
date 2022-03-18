@@ -48,6 +48,7 @@ export default function App() {
       ])
     }
     const onNewWinner = (address, message) => {
+      console.log("Event happended with winner")
       if(address === currentAccount){
         alert(message)
       }
@@ -59,6 +60,7 @@ export default function App() {
       setContract(wavePortalContract)
       //Set event listener to add a new wave to the waves variable every time the contract emits a new "NewWave" event
       wavePortalContract.on("NewWave", onNewWave);
+      wavePortalContract.on("NewWinner", onNewWinner)
     } else {
       console.log("No wallet found")
     }
@@ -164,6 +166,7 @@ export default function App() {
     return () => {
       if (contract) {
         contract.off("NewWave", onNewWave);
+        contract.off("NewWinner", onNewWinner)
       }
     };
   }, [])
