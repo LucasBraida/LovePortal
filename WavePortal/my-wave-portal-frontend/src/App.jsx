@@ -11,14 +11,14 @@ import Footer from "./components/Footer/Footer";
 
 export default function App() {
 
-  const [currentAccount, setCurrentAccount] = React.useState()
+  const [currentAccount, setCurrentAccount] = React.useState("")
   const [minningOver, setMinningOver] = React.useState(true)
   const [waves, setWaves] = React.useState([])
   //variable to change the UI after it's sure that connected and received the available waves
   const [connected, setConnected] = React.useState(false)
   const [contract, setContract] = React.useState()
-  //const contractAddress = "0x5254b542a98716e54aB07247362E04Aa12acCC8c"
-  const contractAddress = "0x6C7077c85692384047fFFAdC7FD6841b6c6d0025"
+  const contractAddress = "0xDb0Ebd67f440d78C7E71e902C6DE680bB80166d0"
+  //const contractAddress = "0x6C7077c85692384047fFFAdC7FD6841b6c6d0025"
   const contractABI = abi.abi
 
   const createWave = (address, timestamp, message, lovedInSession) => {
@@ -36,27 +36,31 @@ export default function App() {
       : el)
     setWaves(newWaves)
   }
-
+  const onNewWave = (from, timestamp, message) => {
+    console.log("event happened")
+    setWaves(prevState => [
+      ...prevState,
+      new WaveObject(from, new Date(timestamp * 1000), message, false),
+      //createWave(from, new Date(timestamp * 1000), message, false),
+    ])
+  }
+  const onNewWinner = (address, message) => {
+    if(address.toUpperCase() == currentAccount.toUpperCase()){
+      console.log("inside if onNewWinner")
+      alert(message)
+    }
+  }
   const getContract = () => {
-    const { ethereum } = window
-    const onNewWave = (from, timestamp, message) => {
-      console.log("event happened")
-      setWaves(prevState => [
-        ...prevState,
-        new WaveObject(from, new Date(timestamp * 1000), message, false),
-        //createWave(from, new Date(timestamp * 1000), message, false),
-      ])
-    }
-    const onNewWinner = (address, message) => {
-      console.log("Event happended with winner")
-      if(address === currentAccount){
-        alert(message)
-      }
-    }
+    let wavePortalContract
+    try{
+      const { ethereum } = window
+    
+   
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
-      const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer)
+      wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer)
+      //const accounts =  ethereum.request({ method: "eth_requestAccounts" });
       setContract(wavePortalContract)
       //Set event listener to add a new wave to the waves variable every time the contract emits a new "NewWave" event
       wavePortalContract.on("NewWave", onNewWave);
@@ -64,11 +68,22 @@ export default function App() {
     } else {
       console.log("No wallet found")
     }
+    }catch(error){
+      console.log(error)
+    }
+    return () => {
+      if (wavePortalContract) {
+        wavePortalContract.off("NewWave", onNewWave);
+        wavePortalContract.off("NewWinner", onNewWinner)
+      }
+    };
+
+    
   }
 
   const getWaves = async () => {
     try {
-      console.log(contract)
+      //console.log(contract)
 
       const wavesBlockchain = await contract.getAllWaves()
       //set connected to true after it received the waves
@@ -85,7 +100,7 @@ export default function App() {
 
   const getOkayToWave = async (account) => {
     const okay = await contract.isWaverOkayToWave(account)
-    console.log(okay)
+    //console.log(okay)
     return okay
   }
   const wave = async (messageParam) => {
@@ -152,6 +167,7 @@ export default function App() {
       getWaves();
       console.log(waves)
       setCurrentAccount(accounts[0])
+      console.log("Running connectWallet " + currentAccount)
     } catch (error) {
       console.log(error)
     }
@@ -160,16 +176,74 @@ export default function App() {
   function changeMessage(e) {
     setMessage(e.target.value)
   }
+  React.useEffect(getContract, [currentAccount])
+  /*React.useEffect(() => {
+    let wavePortalContract;
+  
+    const onNewWave = (from, timestamp, message) => {
+      console.log("event happened")
+      setWaves(prevState => [
+        ...prevState,
+        new WaveObject(from, new Date(timestamp * 1000), message, false),
+      ])
+    }
+    const onNewWinner = (address, message) => {
+      if(address.toUpperCase() === currentAccount.toUpperCase()){
+        alert(message)
+      }
+    }
 
-  React.useEffect(() => {
+    if (window.ethereum) {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer);
+      setContract(wavePortalContract)
+      wavePortalContract.on("NewWave", onNewWave);
+      wavePortalContract.on("NewWinner", onNewWinner)
+    }
+  
+    return () => {
+      if (wavePortalContract) {
+        wavePortalContract.off("NewWave", onNewWave);
+        wavePortalContract.off("NewWinner", onNewWinner)
+      }
+    };
+  }, [currentAccount]);*/
+
+  /*React.useEffect(() => {
     getContract()
+    console.log("This is currentAccount on Effect" + currentAccount)
     return () => {
       if (contract) {
         contract.off("NewWave", onNewWave);
-        contract.off("NewWinner", onNewWinner)
+        //contract.off("NewWinner", onNewWinner)
       }
     };
   }, [])
+
+  React.useEffect(()=>{
+    const { ethereum } = window
+    console.log(currentAccount + " inside Effect to set onNewWinner")
+   
+    if (ethereum) {
+      const provider = new ethers.providers.Web3Provider(ethereum)
+      const signer = provider.getSigner()
+      const wavePortalContract = new ethers.Contract(contractAddress, contractABI, signer)
+      //const accounts =  ethereum.request({ method: "eth_requestAccounts" });
+      //setContract(wavePortalContract)
+      //Set event listener to add a new wave to the waves variable every time the contract emits a new "NewWave" event
+      //wavePortalContract.on("NewWave", onNewWave);
+      wavePortalContract.on("NewWinner", onNewWinner)
+    } else {
+      console.log("No wallet found")
+    }
+    return () => {
+      if (contract) {
+        //contract.off("NewWave", onNewWave);
+        contract.off("NewWinner", onNewWinner)
+      }
+    };
+  }, [currentAccount])*/
 
 
 

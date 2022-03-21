@@ -27,7 +27,7 @@ export default function WaveList(props) {
             />
     )
   })
-  console.log(props.waves)
+  //console.log(props.waves)
   return (
     <div className="dataContainer">
       {/*<Modal
