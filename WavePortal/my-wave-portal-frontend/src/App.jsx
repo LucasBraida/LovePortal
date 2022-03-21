@@ -54,8 +54,8 @@ export default function App() {
     let wavePortalContract
     try{
       const { ethereum } = window
-    
-   
+
+
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()
@@ -78,7 +78,7 @@ export default function App() {
       }
     };
 
-    
+
   }
 
   const getWaves = async () => {
@@ -165,9 +165,9 @@ export default function App() {
 
       const accounts = await ethereum.request({ method: "eth_requestAccounts" });
       getWaves();
-      console.log(waves)
+      //console.log(waves)
       setCurrentAccount(accounts[0])
-      console.log("Running connectWallet " + currentAccount)
+      //console.log("Running connectWallet " + currentAccount)
     } catch (error) {
       console.log(error)
     }
@@ -176,10 +176,13 @@ export default function App() {
   function changeMessage(e) {
     setMessage(e.target.value)
   }
+  React.useEffect(()=>{
+    console.log(waves)
+  })
   React.useEffect(getContract, [currentAccount])
   /*React.useEffect(() => {
     let wavePortalContract;
-  
+
     const onNewWave = (from, timestamp, message) => {
       console.log("event happened")
       setWaves(prevState => [
@@ -201,7 +204,7 @@ export default function App() {
       wavePortalContract.on("NewWave", onNewWave);
       wavePortalContract.on("NewWinner", onNewWinner)
     }
-  
+
     return () => {
       if (wavePortalContract) {
         wavePortalContract.off("NewWave", onNewWave);
@@ -224,7 +227,7 @@ export default function App() {
   React.useEffect(()=>{
     const { ethereum } = window
     console.log(currentAccount + " inside Effect to set onNewWinner")
-   
+
     if (ethereum) {
       const provider = new ethers.providers.Web3Provider(ethereum)
       const signer = provider.getSigner()

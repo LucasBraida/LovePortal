@@ -1,5 +1,6 @@
 //import { Modal } from "@mui/material"
 import React from "react"
+import DataContext from "../../data/DataContext.js"
 //import MessageWindow from "../MessageWindow/MessageWindow.jsx";
 import Wave from "../Wave/Wave.jsx"
 import "./WaveList.css"
@@ -11,6 +12,7 @@ export default function WaveList(props) {
   const [heartClicked, setHeartClicked] = React.useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
+  const context = React.useContext(DataContext)
   function sortWaves(waveOne, waveTwo) {
     if (waveOne.timestamp > waveTwo.timestamp) {
       return -1

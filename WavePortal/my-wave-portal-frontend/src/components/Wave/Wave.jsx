@@ -9,10 +9,12 @@ export default function Wave(props) {
   const [open, setOpen] = React.useState(false)
   const [waitingSendLove, setWaitingSendLove] = React.useState(false)
   const context = React.useContext(DataContext)
+  //console.log("contexto na wave " + props.message)
+  //console.log(context)
 
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
-
+  const [change, setChange] = React.useState(false)
   const waveObject = {
     address: props.address,
     timestamp: props.timestamp,
@@ -20,13 +22,17 @@ export default function Wave(props) {
     lovedInSession: props.lovedInSession
   }
 
+
+
   const setLoved = (waveObj) =>{
     const newWaves = context.waves.map(el => JSON.stringify(el) === JSON.stringify(waveObj) ?
     {...el, lovedInSession: true}
     : el)
     context.setWaves(newWaves)
   }
-
+  const alterwaveObject = () =>{
+    waveObject.lovedInSession = true
+  }
   const confirmSendLove = async (waveObj) => {
     try{
       const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.0001') })
@@ -34,7 +40,9 @@ export default function Wave(props) {
       setWaitingSendLove(true)
       await sendLove.wait()
       setWaitingSendLove(false)
-      setLoved(waveObject)
+      //alterwaveObject()
+      setChange(true)
+      //setLoved(waveObject)
     }catch(error){
       alert("Something went wrong with your transaction")
       setWaitingSendLove(false)
@@ -43,17 +51,17 @@ export default function Wave(props) {
     //console.log("Chegamos até aqui")
   }
 
-  const tryTest = (num) =>{
-    try{
-      const res = 10/num
-      console.log("Depois do possivel erro")
-      console.log(res)
-    }catch(error){
-
-      console.log("Pego no erro")
+  React.useEffect(()=>{
+    if(change){
+      const newWaves = context.waves.map(el => JSON.stringify(el) === JSON.stringify(waveObject) ?
+      {...el, lovedInSession: true}
+      : el)
+      context.setWaves(newWaves)
     }
-    console.log("Final da funcao")
-  }
+
+
+
+  }, [change])
   return (
     <div className="wave" >
       <Modal
