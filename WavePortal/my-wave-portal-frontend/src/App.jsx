@@ -137,7 +137,6 @@ export default function App() {
   const checkIfWalletisConnected = async () => {
 
     try {
-
       const { ethereum } = window
 
       const accounts = await ethereum.request({ method: "eth_accounts" })
@@ -145,14 +144,32 @@ export default function App() {
       if (accounts.length !== 0) {
         console.log("Look a wallet address:" + accounts[0])
         setCurrentAccount(accounts[0])
+        console.log(currentAccount)
       } else {
         console.log("No accounts there")
       }
     } catch (error) {
       console.log(error)
     }
-
   }
+  //reset current Account if it change after the connect button
+  const getCurrentAccount = async () => {
+
+    try {
+      const { ethereum } = window
+
+      const accounts = await ethereum.request({ method: "eth_accounts" })
+      if (accounts.length !== 0) {
+        return accounts[0]
+      } else {
+        console.log("No accounts there")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    return null
+  }
+
 
   const connectWallet = async () => {
     try {
@@ -177,8 +194,8 @@ export default function App() {
     setMessage(e.target.value)
   }
   React.useEffect(()=>{
-    console.log(waves)
-  })
+    checkIfWalletisConnected()
+  }, [])
   React.useEffect(getContract, [currentAccount])
   /*React.useEffect(() => {
     let wavePortalContract;
@@ -251,7 +268,7 @@ export default function App() {
 
 
   return (
-    <DataContext.Provider value={{ waves, setWaves, contract }}>
+    <DataContext.Provider value={{ waves, setWaves, contract, currentAccount, getCurrentAccount }}>
       <div className="mainContainer">
         <Header className="headContainer"
           totalWaves={waves.length}

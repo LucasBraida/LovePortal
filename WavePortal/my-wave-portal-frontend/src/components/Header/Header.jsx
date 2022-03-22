@@ -25,14 +25,14 @@ function HeaderInput(props) {
       {props.minningOver
         ? <div className="headerInput">
           <button className="waveButton" onClick={sendWave}>
-            Wave at Me
+            Spread the Love
 
           </button>
           <form onSubmit={(e) => { e.preventDefault() }}>
             <textarea
               className="message"
               type="text"
-              placeholder="Sent us something funny"
+              placeholder="Sent us something funny or cute"
               value={message}
               onChange={changeMessage}
             />
@@ -49,19 +49,23 @@ export default function Header(props) {
   return (
     <div className="headContainer">
       <div className="header">
-        👋 Hey there!
+      ❤️ Hey there!
       </div>
       {/*Check if we'are communicating with the blockchain and were able to get the waves*/}
       {props.connected
         ? <>
           <div className="bio">
-            {`We've had ${props.totalWaves} waves so far. Gives us a wave too`}
+            {`We've had ${props.totalWaves} messages so far. Gives us one too.`}
+            <br></br>
+            If someone likes your message, they can send you some eth-love (love in the form of eth)
+            <br></br>
+            And you can do that too!!!!!!
           </div>
           <HeaderInput minningOver={props.minningOver} wave={props.wave} message={props.message} changeMessage={props.changeMessage} />
         </>
         : <>
           <div className="bio">
-            {`Connect your wallet and wave at me`}
+            {`Connect your wallet and send a nice message`}
           </div>
           <button className="waveButton" onClick={props.connectWallet}>
             Connect your Wallet

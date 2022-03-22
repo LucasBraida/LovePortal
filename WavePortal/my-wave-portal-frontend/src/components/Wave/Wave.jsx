@@ -34,8 +34,14 @@ export default function Wave(props) {
     waveObject.lovedInSession = true
   }
   const confirmSendLove = async (waveObj) => {
+    //get account in use
+    const currentAccount = await context.getCurrentAccount()
     try{
-      const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.0001') })
+      //meka sure users are not trying to send love to themselves
+      if(currentAccount.toUpperCase() === props.address.toUpperCase()){
+        alert("It's no fun sending love to yourself. Spread the love")
+      }else{
+        const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.0001') })
       //alert("Waiting to confirm your transaction")
       setWaitingSendLove(true)
       await sendLove.wait()
@@ -43,6 +49,8 @@ export default function Wave(props) {
       //alterwaveObject()
       setChange(true)
       //setLoved(waveObject)
+      }
+
     }catch(error){
       alert("Something went wrong with your transaction")
       setWaitingSendLove(false)
