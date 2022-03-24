@@ -21,7 +21,17 @@ export default function WaveList(props) {
     }
   }
 
-  const waveElements = props.waves.sort(sortWaves).map((wave, index) => {
+  let waveElements = [...props.waves]
+  waveElements = waveElements.sort(sortWaves).map((wave, index) => {
+    return (<Wave key={wave.timestamp} address={wave.address} timestamp={wave.timestamp} message={wave.message}
+            doNotShowModal={() =>{setShowModal(false)}}
+            showModal={showModal}
+            lovedInSession={wave.lovedInSession}
+            />
+    )
+  })
+
+  /*const waveElements3 = context.waves.map((wave, index) => {
     return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}
             doNotShowModal={() =>{setShowModal(false)}}
             showModal={showModal}
@@ -29,7 +39,30 @@ export default function WaveList(props) {
             />
     )
   })
+  const [stateWaveEl, setStateWaveEl] = React.useState(waveElements)*/
+  //console.log("State Wave El")
+  //console.log(stateWaveEl)
+  /*const waveElements = props.waves.map((wave, index) => {
+    return (<Wave key={index} address={wave.address} timestamp={wave.timestamp} message={wave.message}
+            doNotShowModal={() =>{setShowModal(false)}}
+            showModal={showModal}
+            lovedInSession={wave.lovedInSession}
+            />
+    )
+  })*/
   //console.log(props.waves)
+  /*React.useEffect(()=>{
+    console.log("runnig this")
+    const waveElements2 = props.waves.sort(sortWaves).map((wave, index) => {
+      return (<Wave key={wave.timestamp} address={wave.address} timestamp={wave.timestamp} message={wave.message}
+              doNotShowModal={() =>{setShowModal(false)}}
+              showModal={showModal}
+              lovedInSession={wave.lovedInSession}
+              />
+      )
+    })
+    setStateWaveEl(waveElements2)
+  },[])*/
   return (
     <div className="dataContainer">
       {/*<Modal

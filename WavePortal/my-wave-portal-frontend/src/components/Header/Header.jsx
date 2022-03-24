@@ -8,24 +8,60 @@ import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import Stack from '@mui/material/Stack';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
+import DataContext from "../../data/DataContext";
 
 function HeaderInput(props) {
   const [message, setMessage] = React.useState("")
+  const context = React.useContext(DataContext)
+  const [minningOver, setMinningOver] = React.useState(true)
+  const getOkayToWave = async (account) => {
+    const okay = await context.contract.isWaverOkayToWave(account)
+    //console.log(okay)
+    return okay
+  }
+  const wave = async (messageParam) => {
+    try {
+      const { ethereum } = window
 
+      if (ethereum) {
+        //console.log(currentAccount)
+        const currentAccount = await context.getCurrentAccount()
+        const okayToWave = await getOkayToWave(currentAccount)
+        if (okayToWave) {
+          if (messageParam.length > 0) {
+            const waveWait = await context.contract.wave(messageParam, { gasLimit: 300000 })
+            setMinningOver(false)
+            await waveWait.wait()
+            setMinningOver(true)
+          } else {
+            alert("A wave with a message is sooo much more special")
+          }
+        } else {
+          alert("Wait a momment waver! We need a little time to breathe")
+        }
+
+      } else {
+        console.log("No wallet found")
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
   const changeMessage = (e) => {
     setMessage(e.target.value)
   }
 
   const sendWave = async () => {
-    await props.wave(message)
+    await wave(message)
     setMessage("")
   }
   return (
     <div className="headerInput">
-      {props.minningOver
+      {minningOver
         ? <div className="headerInput">
           <button className="waveButton" onClick={sendWave}>
-            Spread the Love
+            Wave at Us
 
           </button>
           <form onSubmit={(e) => { e.preventDefault() }}>
@@ -55,7 +91,7 @@ export default function Header(props) {
       {props.connected
         ? <>
           <div className="bio">
-            {`We've had ${props.totalWaves} messages so far. Gives us one too.`}
+            {`We've had ${props.totalWaves} waves so far. Gives us one too.`}
             <br></br>
             If someone likes your message, they can send you some eth-love (love in the form of eth)
             <br></br>
@@ -65,7 +101,7 @@ export default function Header(props) {
         </>
         : <>
           <div className="bio">
-            {`Connect your wallet and send a nice message`}
+            {`Connect your wallet and send a nice love-wave`}
           </div>
           <button className="waveButton" onClick={props.connectWallet}>
             Connect your Wallet

@@ -9,6 +9,12 @@ export default function Wave(props) {
   const [open, setOpen] = React.useState(false)
   const [waitingSendLove, setWaitingSendLove] = React.useState(false)
   const context = React.useContext(DataContext)
+  const [waveObjTest, setWaveObjTest] = React.useState({
+    address: props.address,
+    timestamp: props.timestamp,
+    message: props.message,
+    lovedInSession: props.lovedInSession
+  })
   //console.log("contexto na wave " + props.message)
   //console.log(context)
 
@@ -21,7 +27,9 @@ export default function Wave(props) {
     message: props.message,
     lovedInSession: props.lovedInSession
   }
-
+  if(change){
+    console.log(waveObject)
+  }
 
 
   const setLoved = (waveObj) =>{
@@ -37,11 +45,12 @@ export default function Wave(props) {
     //get account in use
     const currentAccount = await context.getCurrentAccount()
     try{
-      //meka sure users are not trying to send love to themselves
+      //make sure users are not trying to send love to themselves
       if(currentAccount.toUpperCase() === props.address.toUpperCase()){
         alert("It's no fun sending love to yourself. Spread the love")
       }else{
         const sendLove =  await context.contract.sendLove(props.address, { gasLimit: 300000, value: ethers.utils.parseEther('0.0001') })
+        console.log("Address Send Love: " + props.address)
       //alert("Waiting to confirm your transaction")
       setWaitingSendLove(true)
       await sendLove.wait()
@@ -66,9 +75,6 @@ export default function Wave(props) {
       : el)
       context.setWaves(newWaves)
     }
-
-
-
   }, [change])
   return (
     <div className="wave" >
@@ -77,8 +83,7 @@ export default function Wave(props) {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description">
-        <MessageWindow closeModal={handleClose} doNotShowModal={props.doNotShowModal} confirmSendLove={confirmSendLove}
-          setLoved = {() => {setLoved(waveObject)}}/>
+        <MessageWindow closeModal={handleClose} doNotShowModal={props.doNotShowModal} confirmSendLove={confirmSendLove}/>
       </Modal>
       <div className="wave--address wave--info--position wave--left--border">
         <span className="title">Address:</span>
