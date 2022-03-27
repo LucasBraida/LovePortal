@@ -13,9 +13,10 @@ contract WavePortal {
         address waver;
         uint256 timestamp;
         string message;
+        uint256 id;
     }
 
-    event NewWave(address indexed from, uint256 timestamp, string message);
+    event NewWave(address indexed from, uint256 timestamp, string message, uint256 id);
     event NewWinner(address winner, string message);
 
     Wave[] waves;
@@ -30,31 +31,19 @@ contract WavePortal {
 
     function wave(string memory _message) public {
         require(
-            lastWaveTmp[msg.sender] + 5 minutes < block.timestamp,
+            lastWaveTmp[msg.sender] + 10 minutes < block.timestamp,
             "Wait a few more minutes"
         );
+        require(bytes(_message).length <=100, "That wave is to big");
         seed = (block.timestamp + block.difficulty + seed) % 100;
 
         lastWaveTmp[msg.sender] = block.timestamp;
         totalWaves += 1;
-        waves.push(Wave(msg.sender, block.timestamp, _message));
+        waves.push(Wave(msg.sender, block.timestamp, _message, totalWaves));
         //console.log("%s waved w/ message %s", msg.sender, _message);
-        emit NewWave(msg.sender, block.timestamp, _message);
+        emit NewWave(msg.sender, block.timestamp, _message, totalWaves);
 
-        //console.log("Random seed number %d", seed);
-        if (seed <= 10) {
-            console.log("You have won %s ", msg.sender);
-
-            uint256 prizeAmount = 0.001 ether;
-
-            require(
-                prizeAmount <= address(this).balance,
-                "Sorry! Trying to send more funds than I have available"
-            );
-
-            (bool success, ) = (msg.sender).call{value: prizeAmount}("");
-            require(success, "Failed to withdraw money from the contract");
-        }
+        
     }
     
     function sendLove(address msgOwner) public payable {
@@ -65,8 +54,8 @@ contract WavePortal {
         require(msgOwner != msg.sender,
         "Let's spread the love! Send some to someone else not to yourself.");
         seed = (block.timestamp + block.difficulty + seed) % 100;
-        if (seed <= 100) {
-            uint256 prizeAmount = 0.00001 ether;
+        if (seed <= 9) {
+            uint256 prizeAmount = 0.0004 ether;
 
             require(
                 2 * prizeAmount <= address(this).balance,
