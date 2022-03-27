@@ -16,16 +16,16 @@ export default function App() {
   //variable to change the UI after it's sure that connected and received the available waves
   const [connected, setConnected] = React.useState(false)
   const [contract, setContract] = React.useState()
-  const contractAddress = "0xDb0Ebd67f440d78C7E71e902C6DE680bB80166d0"
+  //const contractAddress = "0xDb0Ebd67f440d78C7E71e902C6DE680bB80166d0"
   const [waveMinning, setWaveMinning] = React.useState(false)
-  //const contractAddress = "0x6C7077c85692384047fFFAdC7FD6841b6c6d0025"
+  const contractAddress = "0x3af05686FCbD64DccFB4eE8D86fA7Ef8Ac328Fe9"
   const contractABI = abi.abi
 
   //function to run upon receiving a NewWave event
-  const onNewWave = (from, timestamp, message) => {
+  const onNewWave = (from, timestamp, message, id) => {
     setWaves(prevState => [
       ...prevState,
-      new WaveObject(from, new Date(timestamp * 1000), message, false),
+      new WaveObject(from, new Date(timestamp * 1000), message, false, id),
     ])
   }
   //function to run upon receiving a NewWinner event
@@ -66,15 +66,11 @@ export default function App() {
 
   const getWaves = async () => {
     try {
-      //console.log(contract)
-
       const wavesBlockchain = await contract.getAllWaves()
       //set connected to true after it received the waves
-
       setConnected(true)
       setWaves(wavesBlockchain.map(wave => {
-        return new WaveObject(wave.waver, new Date(wave.timestamp * 1000), wave.message, false)
-        //return createWave(wave.waver, new Date(wave.timestamp * 1000) , wave.message, false)
+        return new WaveObject(wave.waver, new Date(wave.timestamp * 1000), wave.message, false, wave.id)
       }))
     } catch (error) {
       console.log(error)
@@ -172,11 +168,9 @@ export default function App() {
     }
   }
 
-  /*React.useEffect(()=>{
-    checkIfWalletisConnected()
-  }, [])*/
+ 
   React.useEffect(getContract, [])
-  console.log(waves)
+  //console.log(waves)
 
   return (
     <DataContext.Provider value={{ waves, setWaves, contract, currentAccount, getCurrentAccount, waveMinning, setWaveMinning }}>

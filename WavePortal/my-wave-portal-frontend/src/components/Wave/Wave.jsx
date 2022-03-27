@@ -5,6 +5,7 @@ import { Modal } from "@mui/material"
 import MessageWindow from "../MessageWindow/MessageWindow.jsx";
 import DataContext from "../../data/DataContext";
 import { ethers } from "ethers";
+//import WaveObject from "./utils/WaveObject"
 export default function Wave(props) {
   const [open, setOpen] = React.useState(false)
   const [waitingSendLove, setWaitingSendLove] = React.useState(false)
@@ -25,11 +26,12 @@ export default function Wave(props) {
     address: props.address,
     timestamp: props.timestamp,
     message: props.message,
-    lovedInSession: props.lovedInSession
+    lovedInSession: props.lovedInSession,
+    id: props.id
   }
-  if(change){
+  /*if(change){
     console.log(waveObject)
-  }
+  }*/
 
 
   const setLoved = (waveObj) =>{

@@ -30,6 +30,7 @@
   margin: 0px 10px;
   width: 50%;
   align-self: center;
+  word-wrap: break-word;
 }
 
 .wave--address{

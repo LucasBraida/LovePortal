@@ -12,6 +12,7 @@ import DataContext from "../../data/DataContext";
 
 function HeaderInput(props) {
   const [message, setMessage] = React.useState("")
+  const messageMaxLength = 100
   const context = React.useContext(DataContext)
   const [minningOver, setMinningOver] = React.useState(true)
   const getOkayToWave = async (account) => {
@@ -64,15 +65,22 @@ function HeaderInput(props) {
             Wave at Us
 
           </button>
-          <form onSubmit={(e) => { e.preventDefault() }}>
-            <textarea
-              className="message"
-              type="text"
-              placeholder="Sent us something funny or cute"
-              value={message}
-              onChange={changeMessage}
-            />
-          </form>
+          <div className="headerInput--textarea">
+            <form onSubmit={(e) => { e.preventDefault() }}>
+              <textarea
+                className="headerInput--message"
+                type="text"
+                placeholder="Sent us something funny or cute"
+                value={message}
+                onChange={changeMessage}
+                maxLength={messageMaxLength}
+              />
+            </form>
+            <div className="headerInput--counter">
+              <span>{message.length}</span>
+              <span>/{messageMaxLength}</span>
+            </div>
+          </div>
         </div>
 
         : <DoubbleBubble speed={5} customText="Waiting those beautifull miners" />}
@@ -85,12 +93,12 @@ export default function Header(props) {
   return (
     <div className="headContainer">
       <div className="header">
-      ❤️ Hey there!
+        ❤️ Hey there!
       </div>
       {/*Check if we'are communicating with the blockchain and were able to get the waves*/}
       {props.connected
         ? <>
-          <div className="bio">
+          <div className="header--bio">
             {`We've had ${props.totalWaves} waves so far. Gives us one too.`}
             <br></br>
             If someone likes your message, they can send you some eth-love (love in the form of eth)

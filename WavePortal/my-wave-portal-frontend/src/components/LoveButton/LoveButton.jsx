@@ -27,7 +27,10 @@ export default function Wave(props) {
                         if (props.showModal) {
                             props.onClick()
                         } else {
-                            props.confirmSendLove()
+                            if(!props.lovedInSession){
+                                props.confirmSendLove()
+                            }
+                            
                         }
 
                     }} >

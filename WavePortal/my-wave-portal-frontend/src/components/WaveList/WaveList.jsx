@@ -22,8 +22,8 @@ export default function WaveList(props) {
   }
 
   let waveElements = [...props.waves]
-  waveElements = waveElements.sort(sortWaves).map((wave, index) => {
-    return (<Wave key={wave.timestamp} address={wave.address} timestamp={wave.timestamp} message={wave.message}
+  waveElements = waveElements.sort(sortWaves).map((wave) => {
+    return (<Wave key={wave.id} address={wave.address} timestamp={wave.timestamp} message={wave.message} id={wave.id}
             doNotShowModal={() =>{setShowModal(false)}}
             showModal={showModal}
             lovedInSession={wave.lovedInSession}
