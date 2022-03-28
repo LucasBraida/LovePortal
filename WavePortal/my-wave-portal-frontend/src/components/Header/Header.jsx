@@ -1,13 +1,6 @@
 import React from "react"
 import "./Header.css"
 import DoubbleBubble from "../DoubleBubble/DoubleBubble.jsx";
-import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import Stack from '@mui/material/Stack';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
-import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
 import DataContext from "../../data/DataContext";
 
 function HeaderInput(props) {
@@ -105,7 +98,7 @@ export default function Header(props) {
             <br></br>
             And you can do that too!!!!!!
           </div>
-          <HeaderInput minningOver={props.minningOver} wave={props.wave} message={props.message} changeMessage={props.changeMessage} />
+          <HeaderInput /*minningOver={props.minningOver}*/ wave={props.wave} message={props.message} changeMessage={props.changeMessage} />
         </>
         : <>
           <div className="bio">

@@ -9,7 +9,7 @@
     top: 15%;
     left: 20%;
     border-radius: 7px;
-    height: 70%;
+    max-height: 70%;
     overflow-y: auto;
     background-image: linear-gradient(125deg, rgb(236, 130, 148),rgba(255, 255, 255, 0));
 }
