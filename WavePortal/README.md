@@ -7,7 +7,8 @@ The reinterpretation turns the portal in a Love Portal, adding a love theme, the
 The current portal uses the Rinkeby Testnet and is available to use in https://lucasbraidaloveportal.netlify.app
 
 
-###Original Features
+### Original Features
+
 #### Contract
 - Code in Solidity.
 - Function to send message (Wave).
@@ -22,11 +23,11 @@ The current portal uses the Rinkeby Testnet and is available to use in https://l
 - MetaMask communication to retrieve address and interact with the contract.
 - Message list display with address and timestamp sorted by most recent wave.
 
-###New Features
-####Contract
+### New Features
+#### Contract
 - Function to check if the address can wave again (10 minutes wait period).
 - Function to Send Love (like a message) that ensures the right amount of ether is being charged (0.0001 ether) from the user to avoid a malicious applictaion wrongfully interacting with the contract. Other than that, verifies that the user is not trying to like it's own waves and then decide randomly if the user, and the message creator, won the prize.
 - Emits and event informing the winners with a different message depending if someone liked your message or if you liked and won.
 
-####Application
+#### Application
 -
