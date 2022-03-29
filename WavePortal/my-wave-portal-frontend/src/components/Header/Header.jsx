@@ -102,7 +102,7 @@ export default function Header(props) {
         </>
         : <>
           <div className="bio">
-            {`Connect your wallet and send a nice love-wave`}
+            {`Connect your wallet using the Rinkeby Testnet and send a nice love-wave`}
           </div>
           <button className="waveButton" onClick={props.connectWallet}>
             Connect your Wallet
