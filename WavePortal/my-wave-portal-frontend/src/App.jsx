@@ -99,7 +99,7 @@ export default function App() {
         return;
       }
 
-      //const accounts = await ethereum.request({ method: "eth_requestAccounts" });
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" });
       getWaves();
       //setCurrentAccount(accounts[0])
     } catch (error) {
