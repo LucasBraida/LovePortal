@@ -1,0 +1,71 @@
+.messageWindow{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 15px 35px;
+    align-items: center;
+    width: 60%;
+    position: absolute;
+    top: 15%;
+    left: 20%;
+    border-radius: 7px;
+    max-height: 70%;
+    overflow-y: auto;
+    background-image: linear-gradient(125deg, rgb(236, 130, 148),rgba(255, 255, 255, 0));
+}
+
+.messageWindow--title{
+    margin-top: 0px;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.messageWindow--text{
+    margin-top: 0px;
+    align-content: start;
+    line-height: 1.6rem;
+}
+
+.messageWindow--buttons--div{
+    align-self: flex-end;
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+
+}
+
+.messageWindow--checkbox{
+    color: rgb(85, 81, 81);
+}
+
+.messageWindow-button{
+    margin-top: 10px;
+    padding: 7px 10px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: whitesmoke;
+    border-radius: 5px;
+
+    transition-duration: 0.4s;
+    box-sizing: border-box;
+}
+
+.confirm{
+    background-color: green;
+    border: 2px solid green;
+}
+.confirm:hover{
+    background-color: whitesmoke;
+    color: green;
+    border: 2px solid rgb(184, 184, 212);
+}
+.cancel{
+    background-color: red;
+    border: 2px solid red;
+}
+
+.cancel:hover{
+    background-color: whitesmoke;
+    color: red;
+    border: 2px solid rgb(184, 184, 212);
+}

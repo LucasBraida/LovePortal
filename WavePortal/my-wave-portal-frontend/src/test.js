@@ -1,1 +1,0 @@
-const constName = true

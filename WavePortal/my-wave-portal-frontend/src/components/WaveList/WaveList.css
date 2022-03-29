@@ -1,4 +1,5 @@
 .dataContainer{
-  width: 800px;
+  width: 65vw;
   box-sizing: border-box;
+  padding-bottom: 10px;
 }

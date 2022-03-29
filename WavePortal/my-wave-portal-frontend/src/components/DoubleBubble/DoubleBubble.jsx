@@ -2,7 +2,6 @@ import React from "react";
 import '../DoubleBubble/DoubleBubble.css';
 
 export default function DoubbleBubble(props) {
-    console.log("You are importing me")
     return (
         <div className="spinner-container">
 

@@ -8,30 +8,31 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  margin-top: 10px;
-  padding-top: 10px; 
+  width: 90%;
+  padding-top: 10px;
   /*box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);*/
-  box-shadow: 0px 100px 20px -100px rgba(0, 0, 0, 0.2);
+  /*box-shadow: 0px 100px 20px -100px rgba(238, 24, 24, 0.2);
+  /*background-color: rgba(255, 254, 254, 0.849);*/
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(236, 130, 148),rgba(255, 255, 255, 0));
 }
 
 .header {
   text-align: center;
-  font-size: 3rem;
+  font-size: 2.7rem;
   font-weight: 600;
 }
 
-.bio {
+.header--bio {
   text-align: center;
-  color: gray;
   font-size: 1.3rem;
-  margin-top: 25px;
+  margin-top: 10px;
+  line-height: 2.1rem;
 }
 
 .waveButton {
   cursor: pointer;
-  margin-top: 25px;
-  margin-bottom: 25px;
+  margin-top: 20px;
+  margin-bottom: 15px;
   padding: 10px;
   border: 0;
   border-radius: 5px;
@@ -40,8 +41,8 @@
   color: white;
 }
 
-.message{
-  width: 300px;
+.headerInput--message{
+  width: 400px;
   height: 100px;
   border-radius: 5px;
   vertical-align: top;
@@ -54,4 +55,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.headerInput--textarea{
+  position: relative;
+}
+
+.headerInput--counter{
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+  color: grey;
 }

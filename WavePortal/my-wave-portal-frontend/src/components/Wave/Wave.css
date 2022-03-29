@@ -1,14 +1,15 @@
 .wave{
   display: flex;
-  
+
   background-color: white;
   border-radius: 10px;
   margin-top: 16px;
   padding: 8px;
   justify-content: space-between;
-  align-items: center; 
+  align-items: center;
   height: 120px;
-  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 20px 2px rgba(238, 24, 24, 0.2);
+
 }
 
 .wave--info--position{
@@ -18,36 +19,44 @@
   height: 90%;
   padding-top: 10px;
   padding-left: 5px;
-  
+
 }
 
 .wave--left--border{
-  box-shadow: 7px 0px 5px -5px rgba(0, 0, 0, 0.2);
+  box-shadow: 7px 0px 5px -5px rgba(238, 24, 24, 0.2);
 }
 .wave--message{
+  position: relative;
   margin: 0px 10px;
-  width: 500px;
+  width: 50%;
   align-self: center;
+  word-wrap: break-word;
 }
 
 .wave--address{
-  width: 130px;
+  width: 20%;
+
 }
 
 .wave--timestamp{
-  width: 140px;
-  
-  
+  width: 20%;
+  margin-right: 10px;
+
 }
 
 .content{
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
 }
 
 .title{
   font-weight: 600;
+
+}
+
+.wave--button{
+  margin-right: 5px;
 }
 /*.wave--message:before {
   content : "";

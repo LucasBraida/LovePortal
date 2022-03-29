@@ -1,0 +1,25 @@
+.footerContainer {
+    margin-top: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(236, 130, 148),rgba(255, 255, 255, 0));
+    font-size: 0.85rem;
+  }
+
+.footerContainer > h4{
+    margin: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.footerContainer  a{
+  text-decoration: none;
+  color: whitesmoke;
+}
