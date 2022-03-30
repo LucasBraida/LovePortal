@@ -30,4 +30,22 @@ The current portal uses the Rinkeby Testnet and is available to use in https://l
 - Emits and event informing the winners with a different message depending if someone liked your message or if you liked and won.
 
 #### Application
--
+- Love theme.
+- Send Love button attached to each wave.
+- Confirmation modal window explaining how send love works.
+- Checking current account everytime it needs to interact with the contract to make sure it's using the users current account, even if it was only changed in Metamask.
+- Alerts for when there's any error and for when the user wins eth through send love.
+
+### Images
+
+![](https://github.com/LucasBraida/BuildSpaceTutorials/blob/main/WavePortal/LovePortalHomePage.PNG)
+
+> Home page
+
+![](https://github.com/LucasBraida/BuildSpaceTutorials/blob/main/WavePortal/LovePortalWaveList.PNG)
+
+> WaveList
+
+![](https://github.com/LucasBraida/BuildSpaceTutorials/blob/main/WavePortal/LovePortalSendLove.PNG)
+
+> Send Love window
