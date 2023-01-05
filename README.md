@@ -4,7 +4,7 @@ The original project contemplates a simple portal where users can send waves(mes
 
 The reinterpretation turns the portal in a Love Portal, adding a love theme, the ability to Send Love (like) to a message and maybe win a prize in matic, multiple features to avoid misuse and to clarify the new functionality.
 
-The current portal uses Polygon and is available to use in https://lucasbraidaloveportal.netlify.app
+The current portal uses Polygon and is available to use in https://loveportal.lucasbraida.com
 
 
 ### Original Features
@@ -38,14 +38,14 @@ The current portal uses Polygon and is available to use in https://lucasbraidalo
 
 ### Images
 
-![](https://github.com/LucasBraida/BuildSpaceTutorials/blob/main/WavePortal/LovePortalHomePage.PNG)
+![](https://github.com/LucasBraida/LovePortal/blob/main/LovePortalHomePage.PNG)
 
 > Home page
 
-![](https://github.com/LucasBraida/BuildSpaceTutorials/blob/main/WavePortal/LovePortalWaveList.PNG)
+![](https://github.com/LucasBraida/LovePortal/blob/main/LovePortalWaveList.PNG)
 
 > WaveList
 
-![](https://github.com/LucasBraida/BuildSpaceTutorials/blob/main/WavePortal/LovePortalSendLove.PNG)
+![](https://github.com/LucasBraida/LovePortal/blob/main/LovePortalSendLove.PNG)
 
 > Send Love window
