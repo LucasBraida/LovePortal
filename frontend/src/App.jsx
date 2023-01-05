@@ -14,7 +14,7 @@ export default function App() {
   //variable to change the UI after it's sure that connected and received the available waves
   const [connected, setConnected] = React.useState(false)
   const [contract, setContract] = React.useState()
-  const contractAddress = "0x30303fa6C22fb8Cf916722393DF00aF83F2379ac"
+  const contractAddress = "0x02c74b0509cBFa57a5850f2d51DC0CFF9624Bc11"
   const contractABI = abi.abi
 
   //function to run upon receiving a NewWave event
