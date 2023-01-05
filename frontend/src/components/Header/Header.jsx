@@ -76,7 +76,7 @@ function HeaderInput(props) {
           </div>
         </div>
 
-        : <DoubbleBubble speed={5} customText="Waiting those beautifull miners" />}
+        : <DoubbleBubble speed={5} customText="Waiting those beautiful miners" />}
     </div>
   )
 }
@@ -94,7 +94,7 @@ export default function Header(props) {
           <div className="header--bio">
             {`We've had ${props.totalWaves} waves so far. Gives us one too.`}
             <br></br>
-            If someone likes your message, they can send you some eth-love (love in the form of eth)
+            If someone likes your message, they can send you some matic-love (love in the form of MATIC)
             <br></br>
             And you can do that too!!!!!!
           </div>
@@ -102,7 +102,7 @@ export default function Header(props) {
         </>
         : <>
           <div className="bio">
-            {`Connect your wallet using the Rinkeby Testnet and send a nice love-wave`}
+            {`Connect your wallet using the Polygon Mainnet and send a nice love-wave`}
           </div>
           <button className="waveButton" onClick={props.connectWallet}>
             Connect your Wallet
@@ -112,31 +112,3 @@ export default function Header(props) {
     </div>
   )
 }
-
-/*
-return(
-      <div className="headContainer">
-        <div className="header">
-          👋 Hey there!
-        </div>
-        {props.totalWaves
-          ? <div className="bio">
-            {`We've had ${props.totalWaves} waves so far. Gives us a wave too`}
-          </div>
-          : <div className="bio">
-            {`Connect your wallet and wave at me`}
-          </div>}
-
-
-        {props.currentAccount
-          ?
-          <HeaderInput minningOver={props.minningOver} wave={props.wave} message={props.message} changeMessage ={props.changeMessage}/>
-          :<button className="waveButton" onClick={props.connectWallet}>
-            Connect your Wallet
-        </button>
-
-        }
-
-      </div>
-  )
-*/

@@ -24,7 +24,6 @@ contract WavePortal {
     mapping(address => uint256) public lastWaveTmp;
 
     constructor() payable {
-        //console.log("Yo yo, I am a contract and I am smart");
 
         seed = (block.timestamp + block.difficulty) % 100;
     }
@@ -40,7 +39,6 @@ contract WavePortal {
         lastWaveTmp[msg.sender] = block.timestamp;
         totalWaves += 1;
         waves.push(Wave(msg.sender, block.timestamp, _message, totalWaves));
-        //console.log("%s waved w/ message %s", msg.sender, _message);
         emit NewWave(msg.sender, block.timestamp, _message, totalWaves);
 
         
@@ -73,7 +71,6 @@ contract WavePortal {
     }
 
     function getTotalWaves() public view returns (uint256) {
-        //console.log("We have %d total waves!", totalWaves);
         return totalWaves;
     }
 

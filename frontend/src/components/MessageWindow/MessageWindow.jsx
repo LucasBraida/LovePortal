@@ -30,15 +30,15 @@ const MessageWindow = React.forwardRef((props, ref) => {
           <br></br>
           Did you like that fun message? Me too!!! 😍 😍 😍
           <br></br>
-          We have a cool way for you to show your apreciation (and maybe win some juicy eth 😋).
+          We have a cool way for you to show your apreciation (and maybe win some juicy MATIC 😋).
           <br></br>
           <br></br>
           <strong>Here is how the game works:</strong>
           <br></br>
         </p>
         <ul>
-          <li>First, you send a tiny bit of eth (just to make sure the contract doesn't run out of money so we can all play).</li>
-          <li>Second, you and the person that sent the message get a chance to win a LOT of eth 🤑 🤑 🤑 🤑 (it's not that much, but it's more than what you paid).</li>
+          <li>First, you send a tiny bit of MATIC (just to make sure the contract doesn't run out of money so we can all play).</li>
+          <li>Second, you and the person that sent the message get a chance to win a LOT of MATIC 🤑 🤑 🤑 🤑 (it's not that much, but it's more than what you paid).</li>
           <li>Third,... That's it!</li>
           <li>Fourth, you find a new message and send some more love across the blockchain  ❤️❤️❤️❤️❤️❤️</li>
         </ul>
